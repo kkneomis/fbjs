@@ -1,0 +1,34 @@
+<div class="likes story drop-shadow facebook-wall-clearfix">
+	<div class="likes-content story-content" role="article">
+		<div class="likes-header story-headline">
+			<span class="likes-header-text"><%=localize('Likes')%></span>			
+		</div>
+		<div class="likes-body story-message">
+			<% for(var i=0; i<this.data.length;i++){ %>
+				
+					<%if((this.data[i].cover!=undefined) && this.useCoverPhotos){ %>
+					<div class='like-wrapper facebook-wall-clearfix'>	
+						<a href='<%=this.data[i].website%>'>
+							<img class='like-cover' src='<%=this.data[i].cover.source%>' />
+						</a>
+						<div class='like-info-wrapper '>
+							<div class='like-name'><a href='http://facebook.com/<%=this.data[i].id%>'><%=this.data[i].name%></a></div>
+							<span class='like-category'><%=this.data[i].category%></span>
+						</div>
+					</div>
+					<% }else if(!this.useCoverPhotos){ %>
+					<div class='like-wrapper facebook-wall-clearfix'>	
+						<a href='<%=this.data[i].website%>'>
+							<img class='left' src='<%=this.data[i].picture.data.url%>' />
+						</a>
+						<div class='like-info-wrapper  no-cover '>
+							<div class='like-name'><a href='http://facebook.com/<%=this.data[i].id%>'><%=this.data[i].name%></a></div>
+							<span class='like-category'><%=this.data[i].category%></span>
+						</div>
+					</div>
+					<% }%>				
+				
+			<% } %>
+		</div>
+	</div>
+</div>

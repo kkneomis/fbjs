@@ -1,0 +1,29 @@
+<% var coverPhoto = ""  %>
+<div class="albums story drop-shadow facebook-wall-clearfix">
+	<div class="album-content story-content" role="article">
+		<div class="albums-header story-headline">
+			<span class="albums-header-text"><%=localize('Albums')%></span>			
+		</div>
+		<div class="album-body wrapper grid3">
+			<% 
+			var i = 0;
+			var j = i+2;
+			for(var i=0; i<this.data.length;i++){ %>
+				<% 
+				
+				coverPhoto = (typeof this.data[i].cover_photo === 'object')? this.data[i].cover_photo.id :this.data[i].cover_photo; 
+				
+					if (i%3 == 0){ %><div class='facebook-wall-clearfix'> <% }%>
+					<div class='album-cover-wrapper col'>
+						<a class='album-cover-photo-wrapper jfw-lightbox-link'>
+							<img class='album-cover-photo' src="https://graph.facebook.com/<%=coverPhoto%>/picture" alt="<%=this.data[i].description%>" />
+						</a>
+						<div class='album-title h3'><%=this.data[i].name%></div>
+						<div class='album-photo-count hide'><%=this.data[i].count%> <%=localize('Photos')%></div>
+					</div>
+					<%if (i == j){ j+=3 %></div> <% }%>
+			<%  
+			} %>
+		</div>
+	</div>
+</div>

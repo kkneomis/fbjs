@@ -1,0 +1,23 @@
+<%
+	for(var i=0; i<this.data.length;i++){
+	var visibility = "";
+	if(showAtStart!=='All' && i>=showAtStart){
+		visibility = 'hide';
+	}
+%>
+	<div class='comment-wrapper facebook-wall-clearfix <%=visibility%> ' data-id='<%=this.data[i].id%>'>
+		<img class='user-image' src='http://graph.facebook.com/<%=this.data[i].from.id%>/picture/' />	
+		<div class='comment'>
+			<div class='h3'><%=this.data[i].from.name%></div>
+			<div><%=this.data[i].message%></div>
+			<div class='comment-interactions'>
+				<a class='user-interaction-comment-like'><%=localize('Like')%></a> ·    
+				<span class='fbw-icon like-small'></span>
+				<a class='comment-like-count'><%=this.data[i].like_count%></a>
+				<%=this.data[i].created_time%>
+			</div>
+		</div>
+	</div>		
+<%
+	}
+%>

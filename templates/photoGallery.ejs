@@ -1,0 +1,73 @@
+<% 
+startingIndex = this.startingIndex;
+if(this.startingIndex==undefined){
+	var startingIndex = 0;	
+}
+
+var albumName = ''
+if (this.photos.data[0].album){
+	//from photos
+	albumName = this.photos.data[0].album.name;
+}else if(this.name){
+	//from albums
+	albumName =  this.name;
+}
+%>
+<div class='photo-gallery' <% if(this.name){%>data-album-name='<%=this.name%>'<%}%> >
+	<div class='left-col left'>
+		<div class='photo-gallery-photos'>
+			<div class='photos-wrapper'>
+				<%
+				var display = '';
+				
+				for(var i=0; i<this.photos.data.length; i++){ 
+					(i==startingIndex) ? display='show' : display='hide'
+				%>
+					<img class='photo-gallery-photo <%=display%>' data-id='<%=i%>' src='<%=this.photos.data[i].source%>' />
+				<% } %>
+			</div>
+		</div>
+		<div class='photo-gallery-controls'>
+				<div class='photo-gallery-control-left left'></div>
+				<div class='photo-gallery-control-right right'></div>
+		</div>
+		<div class='photo-gallery-info'>
+			<div class='left'><%=this.facebookUser.name%> <%=localize('photos in')%> <span class='photo-gallery-album'><%=albumName%></span> </div>
+			<div class='right'></div>
+		</div>
+	</div>
+	
+	<div class='right-col right photo-gallery-comments '>
+		<%
+		display = '';
+		for(var j=0; j<this.photos.data.length; j++){ 
+			(j==startingIndex) ? display='show' : display='hide'
+		%>
+		<div class='story-wrapper <%=display%>'>
+			<div class='story' data-id='<%=this.photos.data[j].id%>' data-story-link="https://facebook.com/<%=this.photos.data[j].id%>" >
+				<div class='photo-info'>
+					<div class='photo-info-header facebook-wall-clearfix'>
+						<img class='photo-info-header-image left'  src='https://graph.facebook.com/<%=this.facebookUser.username%>/picture/' />
+						<div class='h3'><%=this.facebookUser.name%></div>
+						<div><%=this.photos.data[j].created_time%></div>
+					</div>
+					<div class='photo-description'><%=this.photos.data[j].name%></div>
+					<div class='photo-user-interactions'>
+						<a class='photo-user-interaction-like'><%=localize('Like')%></a> ·
+						<a class='photo-user-interaction-comment'><%=localize('Comment')%></a>
+					</div>
+				</div>
+				<% 
+				if(this.photos.data[j].comments){
+					this.photos.data[j].comments['showAtStart']='All' 
+				%>
+					<%= new  EJS({url: templatePath+'templates/comments.ejs'}).render(this.photos.data[j].comments)%>
+				<% } %>	
+			</div>
+		</div>
+		<% } %>
+		<div class='comment-wrapper-write facebook-wall-clearfix'>
+			<input class='comment-write' type="text" placeholder='<%=localize('Write a comment')%>...' data-story-link="https://facebook.com/<%=this.photos.data[0].id%>"  />
+		</div>
+	</div>
+</div>

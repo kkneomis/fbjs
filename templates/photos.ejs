@@ -1,0 +1,16 @@
+<div class="photos story drop-shadow facebook-wall-clearfix">
+	<div class="photo-content story-content" role="article">
+		<div class="photos-header story-headline">
+			<span class="photos-header-text"><%=localize('Photos')%></span>			
+		</div>
+		<div class="photo-body grid<%=this.numColumns%>">
+			<% for(var i=0; i<this.data.length;i++){ %>
+				<div class=' col <% if(i>this.showAtStart-1){ %>hide<% } %>'>
+					<a class='photo-cover-photo-wrapper jfw-lightbox-link' data-index='<%=i%>'>
+						<img class='photo-cover-photo' src="<%=this.data[i].source%>" title="<%=this.data[i].name%>" />
+					</a>
+				</div>
+			<% } %>
+		</div>
+	</div>
+</div>

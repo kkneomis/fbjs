@@ -1,0 +1,642 @@
+<h3 class="center alt">jQueryFacebookWall Documentation by Lorenzo Gangi v2.0</h3>
+		
+		<hr>
+		
+		<h1 class="center">jQueryFacebookWall</h1>
+		
+		<div class="borderTop">
+			<div class="span-6 colborder info prepend-1">
+				<p class="prepend-top">
+					<strong>
+					Created: 4/8/2014<br>
+					By: Lorenzo Gangi<br>
+					Email: lorenzo@ironlasso.com</strong>
+				</p>
+			</div><!-- end div .span-6 -->		
+	
+			<div class="span-12 last">
+				<p class="prepend-top append-0">Thank you for purchasing my jQuery plugin. If you have any questions that are beyond the scope of this help file, please feel free to email via my user page contact form <a href="http://codecanyon.net/user/ludicrisMaximus">here</a> or at <a href="http://ironlasso.com">ironlasso.com</a>. Thanks so much!</p>
+			</div>
+		</div><!-- end div .borderTop -->
+		
+		<hr>
+		
+		<h2 id="toc" class="alt">Table of Contents</h2>
+		<ol class="alpha">
+			<li><a href="#requirements">Requirements</a></li>
+			<li><a href="#overview">Overview</a></li>
+			<li><a href="#getting-started">Getting Started / Installation</a></li>
+			<li><a href="#htmlStructure">HTML Structure</a></li>
+            <li><a href="#cssFiles">CSS Files and Structure</a></li>
+            <li><a href="#javascript">JavaScript</a></li>
+            <li><a href="#credits">Sources and Credits</a></li>
+            <li><a href="#api">API Usage</a> </li>
+            <li><a href="#plugin-options">Plugin Options</a></li>
+            <li><a href="#facebook">Getting Data from Facebook</a>
+            	<ol>
+                	<li><a href="#fb-account">Get your Facebook Account Name</a></li>
+                	<li><a href="#fb-app">Create / Get your Facebook Account App Id/Key and Secret</a></li>
+                	<li><a href="#fb-access-token">Get your Facebook Access Token</a></li>
+                    <li><a href='#fb-publish-actions'>Get publish_actions permissions for your Facebook App</a></li>
+                	<li><a href="#fb-pages">Facebook Pages vs. Facebook User Accounts</a></li>
+                </ol>
+            </li>
+            <li><a href="#IIS">*Using the plugin on Windows IIS</a></li>
+		</ol>
+<hr>
+<h3 id="requirements"><strong>Requirements</strong> - <a href="#toc">top</a></h3>		
+		jQueryFacebookWall requires:
+        	<ol>
+            	<li>jQuery 1.7 or above</li>
+        		<li>*php 5</li>
+            </ol>
+            <p>*jQueryFacebookWall uses a php script to retrieve a Facebook Access token. The access token only needs to be retrieved once, and a php script for its retrieval is included as a convenience. The Facebook Access Token can be retrieved by means other than php, so php is not strictly required for the plugin to function. See the <a href='#get-your-facebook-access-token' >Get Your Facebook Access Token</a> section for more info.</p>
+<hr>
+<h3 id='overview'><strong>Overview</strong> - <a href="#toc">top</a></h3>
+<p>jQueryFacebookWall (JQFW) wall is jQuery plugin that will retrieve your Facebook account data and build a Facebook styled feed on any website. JQFW provides a lot of features:</p>
+<ul>
+  <li><strong>Two theme styles</strong> of displaying your Facebook data. There is a <a href='http://ironlasso.com/jQueryFacebookWall/wall.html'>standard wall style theme</a> or a <a href='http://ironlasso.com/jQueryFacebookWall/index.html'>timeline style theme</a> this can be set in <a href='#plugin-options'>your plugin options</a>. </li>
+  <li><strong>Events Widget</strong> that shows your Facebook events title, date, and description.</li>
+  <li><strong>Albums Widget</strong> that shows your Facebook albums, and links to a light box to browse the photos.</li>
+  <li><strong>Photos Widget</strong> that shows you Facebook timeline photos.</li>
+  <li><strong>A Facebook style lightbox</strong> to browse your album and photo gallery.</li>
+  <li><strong>Likes Widge</strong>t that shows your Facebook accounts likes.</li>
+  <li><strong>Comments</strong> such that you can comment on any post that JQFW displays. You can also post comments on album and photos images in the lightbox.</li>
+  <li><strong>Likes</strong> so you can like posts,  comments, and  album images.</li>
+</ul>
+<hr>
+        
+		<h3 id="getting-started"><strong>Getting Started</strong> - <a href="#toc">top</a></h3>
+		<p> Follow these instructions to get your Facebook feed on your website. When you downloaded JQFW you got a file called jQueryFacebookWall-production.zip</p>
+		<ol>
+		  <li>unzip jQueryFacebookWall-production.zip </li>
+		  <li>Its contents should look this:
+              	<pre>
+/jQueryFacebookWall-production
+  /css
+  /images
+  /js
+  /licensing
+  /templates
+  readme.html
+  fb_app_token.html
+  fb_get_app_token.php
+  index.html
+  wall.html
+	            </pre>
+		  </li>
+          <li>Rename the folder jQueryFacebookWall-production/ to jQueryFacebookWall/.</li>
+    	  <li>Place the /jQueryFacebookWall folder in your webroot (i.e., where your index.php or index.html for your home page is located). I recommend putting  it there so that it will be easy to reference and you won't have any path issues.          
+		  <li><a href='#get-your-facebook-account-name'>Get your Facebook Account Name</a></li>          
+		  <li><a href='#facebook-app'>Get / Create your Facebook Account App Id/Key and Secret</a></li>
+          <li><a href='#facebook-access-token'>Get your Facebook Access Token</a></li>
+          <li>Include the required plugin javascript files and CSS files in your page header.<br /> 
+                A) jQueryFacebookWall requires jQuery as the name implies. You can get the latest copy of jQuery from Google, or fallback to a local copy included with the plugin if that is not available by adding the following to the file that the plugin will be use on:
+          		  <pre>
+                <code>
+&lt;script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;window.jQuery || document.write('&lt;script src="/jQueryfacebookWall/js/libs/jquery-1.7.min.js">&lt;\/script&gt;')&lt;/script&gt;
+                </code>
+                </pre>
+                B) Next, include the plugin javascript and CSS. You can include the minified versions:
+                <pre>
+                <code>
+&lt;link rel="stylesheet" href="/jQueryFacebookWallcss/jQueryFacebookWall.css" type="text/css" media="screen" /&gt;
+&lt;script src="/jQueryFacebookWall/js/jQueryFacebookWall.js">&lt;/script&gt;  
+                </code>
+                </pre>
+                or you can include the minified version for reduced page weight:
+                <pre>
+                <code>
+ &lt;link rel="stylesheet" href="/jQueryFacebookWallcss/jQueryFacebookWall.min.css" type="text/css" media="screen" /&gt;
+ &lt;script src="/jQueryFacebookWall/js/jQueryFacebookWall.min.js"&gt;&lt;/script&gt;  
+                </code>
+                </pre>
+          </li>
+          <li>Add a &lt;div /&gt; in your &lt;body&gt;&lt;/body&gt; to hold the jQuery Facebook Wall. 
+          		<pre>  	
+&lt;div class="example-class-name" /&gt;
+				</pre>        
+          </li>
+          <li>
+          Call the plugin on the div. For example:
+          		<pre>
+          			<code>
+&lt;script&gt;
+    $(document).ready(function(){
+        // Calling the plugin with your fb account username and an access token
+        $('.example-class-name').jQueryFacebookWall({
+            'appId': 'yourAppId',
+            'facebookUser':'ufc',
+            'domain': 'ironlasso.com',
+            'display':'timeline',
+            'posts':{
+                limit: 22	
+            },
+            'comments':{
+                showAtStart:3,
+                showMoreNum:10,
+                limit: 50
+            },
+            albums:{
+                limit: 6
+            },
+            'debug': false
+        });
+    })//end document ready
+&lt;/script&gt;
+                    
+                    </code>
+          		</pre>
+          </li>
+</ol>
+  <hr>
+		    
+		    <h3 id="htmlStructure"><strong>HTML Structure</strong> - <a href="#toc">top</a></h3>
+		    <p>All HTML created by the plugin is contained in &lt;div class='facebook-wall' /&gt; The plugin creates a two-column layout. Events, albums, photos, and likes are always placed in the right column. Posts are placed in in the left column for the <em>wall</em> style feed (which you can set in your options) and are placed in both the left and right columns alternating. The plugin also provides a light box to browse photo albums. The containing &lt;div&gt; for this is appended to the end of the parent .facebook-wall</p>
+		    <p>Most of the HTML is managed via .ejs template files. See <a href="http://embeddedjs.com/">http://embeddedjs.com/</a> if you are interested in how that works. All of the template files can be found in jQueryFacebookWall/templates/ if you should ever need to make any changes. In that directory you will find templates for:</p>
+		    <ul>
+		      <li><strong>Albums Widget</strong> - albums.ejs</li>
+		      <li><strong>Photos Widget</strong> - photos.ejs</li>
+		      <li><strong>Post and Image Comments</strong> - comments.ejs</li>
+		      <li><strong>Events Widget</strong> - events.ejs</li>
+		      <li><strong>Likes Widget</strong> - likes.ejs</li>
+		      <li><strong>Light Box</strong> - photoGallery.ejs</li>
+		      <li><strong>Posts</strong> - story.ejs</li>
+	        </ul>
+		    <p>&nbsp;</p>
+		    <hr>
+		    
+<h3 id="cssFiles"><strong>CSS Files and Structure</strong> - <a href="#toc">top</a></h3>
+		    
+		    <p>All plugin CSS is located in the /jQueryFacebookWall/CSS/jQueryFacebookWall.css</p>
+		    <p>The CSS document is divided five main parts:</p>
+            <ol>
+		    <li><strong>Shared Rules</strong> - These are used by both the timeline and wall styled feed.</li>
+		    <li><strong>Timeline Rules</strong> - These are the rules used to style the timeline style feed.</li>
+		    <li><strong>Wall Rules</strong> - These are the rules used to style the wall feed.</li>
+		    <li><strong>Light Box styles</strong> - These are used to style the photo gallery light box.</li>
+		    <li><strong>Helper styles</strong> - These are used to display the photo grids in the Album and Photo Widget.</li>
+		    </ol>
+             <p>Also in included is a minified version of all CSS jQueryFacebookWall.min.css. Use this  file instead of the unminified version to reduce load time and page weight.</p>
+<hr>
+		    
+<h3 id="javascript"><strong>JavaScript</strong> - <a href="#toc">top</a></h3>
+		    
+		    <p>All plugin javascript is located in /jQueryFacebookWall/js/. The plugin uses three javascript files:</p>
+		    <ul>
+            	<li><strong>jQueryFacebookWall.js</strong> - This is where all the magic happens. This file makes all the data requests to Facebook, builds the wall, and manages all wall user interactions.</p>
+		    	<li><strong>ejs.js &amp; view.js</strong> - As mentioned before, the plugin uses ejs javascript templating. These files make up the templating engine</p>.
+		    </ul>
+            <p>Also  included is a minified version of all javascript jQueryFacebookWall.min.js. Use this  file instead of the unminfied version to reduce load time and page weight.</p>
+<hr>
+		    
+		    <h3 id="credits"><strong>Sources and Credits</strong> - <a href="#toc">top</a></h3>
+		    
+		    <p>I've used the following images, icons or other files as listed. You can find them in jQueryFAcebookWall/images/
+		      
+	        <ul>
+		        <li>fb-loading.gif - a generic 'spinner' loading .gif</li>
+		        <li>fbBig.gig - a large (32px x 32px) Facebook style square loading gif</li>
+		        <li>fbSmall.gif - a small (16px x 16px ) Facebook style square loading gif</li>
+		        <li>fbSprite.png - all of the various icons used in the plugin</li>
+            </ul>
+
+<hr>		    
+<h3 id="api"><strong>API USAGE</strong> - <a href="#toc">top</a></h3>
+<p>jQueryFacebookWall has a single API method</p>
+<ul>
+	<li><strong>destroy</strong> - removes the wall and all associated data and event bindings from the DOM </li>
+</ul>
+<p>Usage: Remove a jQueryFacebookWall example</p>
+<pre>
+	<code>
+    
+    //Destory example and recreate example--------------------------------------------------------------
+    //create a facebook wall
+    var options = {
+    	'appId': 'yourAppId',
+        'facebookUser':'ufc',
+        'domain': 'ironlasso.com',
+    }
+   	
+    var facebookWall = $('.facebook-wall').jQueryFacebookWall(options);
+    
+    //Then get the plugin object from the jQuery element object.        
+    var jqfbw = facebookWall.data('plugin_jQueryFacebookWall');
+    
+    //Then you can make api calls.        
+    jqfbw.destroy();
+    
+    //and make a new facebook wall
+    $('.facebook-wall').jQueryFacebookWall(options);
+    </code>
+</pre>
+            
+<hr>	    
+<h3 id="plugin-options"><strong>Plugin Options</strong> - <a href="#toc">top</a></h3>
+		    <p>jQueryFacebookWall offers a multitude of options so that you can tweak  it to get exactly what you want.</p>
+            <h4>Table column summary</h4>
+<table border="0" cellspacing="0" cellpadding="0" align="left">
+              <tr>
+                <td width="98" valign="top"><br>
+                  <strong>Option:</strong></td>
+                <td width="541" valign="top"><p>Name of the plugin option.</p></td>
+              </tr>
+              <tr>
+                <td width="98" valign="top"><p><strong>Type:</strong></p></td>
+                <td width="541" valign="top"><p>Data type of the option. If the option is an    enumerated, type the possible values are listed in array style syntax i.e.,    [&lsquo;value 1&rsquo;, &lsquo;value 2&rsquo;]. </p></td>
+              </tr>
+              <tr>
+                <td width="98" valign="top"><p><strong>Required:</strong></p></td>
+                <td width="541" valign="top"><p>Defines if the option must be set; if &lsquo;yes&rsquo; then the    option value must be provided in the plugin instantiation call. If not yes,    the default value of the option is listed.</p></td>
+              </tr>
+              <tr>
+                <td width="98" valign="top"><p><strong>Description:</strong></p></td>
+                <td width="541" valign="top"><p>Description of the options functional purpose.</p></td>
+              </tr>
+            </table>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+<p>&nbsp;</p>
+            <h4>jQueryFacebookWall Plugin Options</h4>
+<table border="1" cellspacing="0" cellpadding="2" width="100%">
+              <tr>
+                <td width="20%" nowrap valign="top"><p><strong>Option</strong></p></td>
+                <td width="19%" valign="top"><p><strong>Type</strong></p></td>
+                <td width="16%" valign="top"><p><strong>Required</strong></p></td>
+                <td width="45%" valign="top"><p><strong>Description</strong></p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>&nbsp;</p></td>
+                <td width="19%" valign="top"><p>&nbsp;</p></td>
+                <td width="16%" valign="top"><p>&nbsp;</p></td>
+                <td width="45%" valign="top"><p>&nbsp;</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>appId</p></td>
+                <td width="19%" valign="top"><p>string</p></td>
+                <td width="16%" valign="top"><p>yes</p></td>
+                <td width="45%" valign="top"><p>Facebook app id. <br>
+                </p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>domain</p></td>
+                <td width="19%" valign="top"><p>string</p></td>
+                <td width="16%" valign="top"><p>yes</p></td>
+                <td width="45%" valign="top"><p>Domain name where the plugin is used. i.e., <a href="http://www.ironlasso.com">www.ironlasso.com</a></p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>FacebookUser</p></td>
+                <td width="19%" valign="top"><p>string</p></td>
+                <td width="16%" valign="top"><p>yes</p></td>
+                <td width="45%" valign="top"><p>Your book account name.</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>display</p></td>
+                <td width="19%" valign="top"><p>[&lsquo;timeline&rsquo;,&rsquo;wall&rsquo;,&rsquo;single-column&rsquo;]</p></td>
+                <td width="16%" valign="top"><p>timeline</p></td>
+                <td width="45%" valign="top"><p>The display style of the wall. See examples.<br>
+                  <a href="http://lc.ironlasso.com/jQueryFacebookWall/timeline.html">Timeline    style</a><br>
+                  <a href="http://lc.ironlasso.com/jQueryFacebookWall/wall.html">Wall    style</a></p> 
+                  <a href="http://lc.ironlasso.com/jQueryFacebookWall/wall.html">Single column</a></p>
+                </td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>displayAnimation</p></td>
+                <td width="19%" valign="top"><p>boolean</p></td>
+                <td width="16%" valign="top"><p>true</p></td>
+                <td width="45%" valign="top"><p>Apply CSS3 scale transitions to feed post when loading</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>displayAnimationDelay</p></td>
+                <td width="19%" valign="top"><p>int</p></td>
+                <td width="16%" valign="top"><p>200</p></td>
+                <td width="45%" valign="top"><p>How fast the display animation will be seperated by in milliseconds</p></td>
+              </tr>
+              <tr>
+                  <td valign="top" nowrap="nowrap" width="20%">language</td>
+                  <td valign="top" width="19%">['dansk', 'deutsch,','dutch', ‘english’, ’espanol’, 'francais’, italiano’, 'polski', 'svenska', 'turk' ]</td>
+                  <td valign="top" width="16%">english</td>
+                  <td valign="top" width="45%">Language Translation for the user interface.</td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>posts.feedType</p></td>
+                <td width="19%" valign="top"><p>[&lsquo;feed&rsquo;,&rsquo;posts&rsquo;]</p></td>
+                <td width="16%" valign="top"><p>feed</p></td>
+                <td width="45%" valign="top"><p>Feed type defines if you would like to show the Facebook user's feed    (include posts from other users) or posts (only posts from Facebook user).</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>posts.limit</p></td>
+                <td width="19%" valign="top"><p>int</p></td>
+                <td width="16%" valign="top"><p>10</p></td>
+                <td width="45%" valign="top"><p>The max number of posts to retrieve from Facebook. Note: Facebook may    or may not return the max number of posts. Some posts get filtered for various    reasons (privacy, blocked user, region, etc.).</p></td>
+              </tr>
+              <tr>
+                <td valign="top" nowrap="nowrap" width="20%">posts.order</td>
+                <td valign="top" width="19%">int</td>
+                <td valign="top" width="16%">5</td>
+                <td valign="top" width="45%">The order in which the posts feed will be added to the wall in relation to the events, albums, and likes.</td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>comments.limit</p></td>
+                <td width="19%" valign="top"><p>int</p></td>
+                <td width="16%" valign="top"><p>100</p></td>
+                <td width="45%" valign="top"><p>Max number of comments returned from Facebook; 5000 is the max value Facebook    allows.</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>comments.showAtStart</p></td>
+                <td width="19%" valign="top"><p>int, &lsquo;All&rsquo;</p></td>
+                <td width="16%" valign="top"><p>2</p></td>
+                <td width="45%" valign="top"><p>The number of comments to show when the wall first loads; use 'All' to    show all posts on load.</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>comments.showMoreNum </p></td>
+                <td width="19%" valign="top"><p>int</p></td>
+                <td width="16%" valign="top"><p>50</p></td>
+                <td width="45%" valign="top"><p>The number of comments that will be revealed when the 'view more    comments' link is clicked for a story.</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>likes.show</p></td>
+                <td width="19%" valign="top"><p>boolean</p></td>
+                <td width="16%" valign="top"><p>true</p></td>
+                <td width="45%" valign="top"><p>Show your Facebook account likes.</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>likes.useCoverPhotos</p></td>
+                <td width="19%" valign="top"><p>boolean</p></td>
+                <td width="16%" valign="top"><p>false</p></td>
+                <td width="45%" valign="top"><p>Show only likes that have a cover photo defined, and use the cover    photo as the like image.</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>likes.limit</p></td>
+                <td width="19%" valign="top"><p>int</p></td>
+                <td width="16%" valign="top"><p>5</p></td>
+                <td width="45%" valign="top"><p>The number of account likes to show.</p></td>
+              </tr>
+              <tr>
+                <td valign="top" nowrap="nowrap" width="20%">likes.order</td>
+                <td valign="top" width="19%">int</td>
+                <td valign="top" width="16%">4</td>
+                <td valign="top" width="45%">The order in which the likes section will be added to the wall in relation to the posts, albums, and likes.</td>
+              </tr>
+              <tr>
+                <td valign="top" nowrap="nowrap" width="20%">likes.minLikes</td>
+                <td valign="top" width="19%">int</td>
+                <td valign="top" width="16%">0</td>
+                <td valign="top" width="45%">The minimum number of like a post must have for it to be included in the wall feed.</td>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>albums.show</p></td>
+                <td width="19%" valign="top"><p>boolean</p></td>
+                <td width="16%" valign="top"><p>true</p></td>
+                <td width="45%" valign="top"><p>Show your Facebook account albums.</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>albums.limit</p></td>
+                <td width="19%" valign="top"><p>int</p></td>
+                <td width="16%" valign="top"><p>3</p></td>
+                <td width="45%" valign="top"><p>Number of albums to show.</p></td>
+              </tr>
+              <tr>
+                <td valign="top" nowrap="nowrap" width="20%">albums.order</td>
+                <td valign="top" width="19%">int</td>
+                <td valign="top" width="16%">3</td>
+                <td valign="top" width="45%">The order in which the albums section will be added to the wall in relation to the posts, photos, and likes.</td>
+              </tr>
+              <tr>
+                <td valign="top" nowrap="nowrap" width="20%">albums.filterAlbums</td>
+                <td valign="top" width="19%">array | false</td>
+                <td valign="top" width="16%">false</td>
+                <td valign="top" width="45%">Only show specific albums. If this options is set to  ['timeline', 'cover photos'] only the albums timeline and cover photos will be displayed.</td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>photos.show</p></td>
+                <td width="19%" valign="top"><p>boolean</p></td>
+                <td width="16%" valign="top"><p>true</p></td>
+                <td width="45%" valign="top"><p>Show your Facebook account photos.</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>photos.type</p></td>
+                <td width="19%" valign="top"><p>[&lsquo;profile&rsquo;,&rsquo;uploaded&rsquo;,&rsquo;tagged&rsquo;]</p></td>
+                <td width="16%" valign="top"><p>uploaded</p></td>
+                <td width="45%" valign="top"><p>The type of photos to show in your photos Section. &lsquo;Uploaded&rsquo; shows    timeline photos, &lsquo;profile&rsquo; shows your profile pics, &lsquo;tagged&rsquo; shows photos you    have been tagged in.</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>photos.numColumns</p></td>
+                <td width="19%" valign="top"><p>[&lsquo;2&rsquo;,&lsquo;3&rsquo;,&lsquo;4&rsquo;]</p></td>
+                <td width="16%" valign="top"><p>4</p></td>
+                <td width="45%" valign="top"><p>The number of image columns you want in the photos Section, you may    want to adjust the image height in jQueryFacebookWall.css =&gt; .Facebook-wall.timeline    .photos .photo-cover-photo-wrapper</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>photos.showAtStart</p></td>
+                <td width="19%" valign="top"><p>int</p></td>
+                <td width="16%" valign="top"><p>12</p></td>
+                <td width="45%" valign="top"><p>The total number of photo<a name="_GoBack"></a> thumbnail images to    show.</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>photos.limit</p></td>
+                <td width="19%" valign="top"><p>int</p></td>
+                <td width="16%" valign="top"><p>25</p></td>
+                <td width="45%" valign="top"><p>The total number of photos to retrieve from Facebook.</p></td>
+              </tr>
+              <tr>
+                <td valign="top" nowrap="nowrap" width="20%">photos.order</td>
+                <td valign="top" width="19%">int</td>
+                <td valign="top" width="16%">2</td>
+                <td valign="top" width="45%">The order in which the photos section will be added to the wall in relation to the posts, albums, events and likes.</td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>events.show</p></td>
+                <td width="19%" valign="top"><p>boolean</p></td>
+                <td width="16%" valign="top"><p>true</p></td>
+                <td width="45%" valign="top"><p>Show your Facebook account events.</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>events.showPastEvents</p></td>
+                <td width="19%" valign="top"><p>string | boolean</p></td>
+                <td width="16%" valign="top"><p>false</p></td>
+                <td width="45%" valign="top"><p>/show past events that are still in your facebook account, false to not show, 0 to show all, or mm/dd/yy to show events starting from a specific date.</p></td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>events.limit</p></td>
+                <td width="19%" valign="top"><p>int</p></td>
+                <td width="16%" valign="top"><p>10</p></td>
+                <td width="45%" valign="top"><p>Max number of events to retrieve from Facebook.</p></td>
+              </tr>
+              <tr>
+                <td valign="top" nowrap="nowrap" width="20%">events.order</td>
+                <td valign="top" width="19%">int</td>
+                <td valign="top" width="16%">1</td>
+                <td valign="top" width="45%">The order in which the events section will be added to the wall in relation to the posts, albums, photos and likes.</td>
+              </tr>
+              <tr>
+                <td width="20%" nowrap valign="top"><p>debug</p></td>
+                <td width="19%" valign="top"><p>boolean</p></td>
+                <td width="16%" valign="top"><p>false</p></td>
+                <td width="45%" valign="top"><p>Print plugin    debugging info in the js console.</p></td>
+              </tr>
+            </table>
+<hr>
+            
+<h3 id="facebook"><strong>Getting Data from Facebook</strong> - <a href="#toc">top</a></h3>
+		    
+<p>jQueryFacebookWall use the Facebook's graph API to retrieve your Facebook account data. Facebook wants to know who is asking for and retrieving their data; consequently, they have an authentication system to manage these needs. One way to retrieve data in this authentication system is via a Facebook App. The App in turn can request an access token, and once an access token has been acquired it can make requests for data from the graph API. Long story short, jQueryFacebookWall needs three things to get your Facebook account data:</p>
+<ol>
+<li>Your Facebook Account Name (Id)</li>
+<li>A Facebook App associated with your Facebook account</li>
+<li>An Access Token for your Facebook App</li>
+</ol>
+<h4 id="fb-account">Get your Facebook Account Name</h4>
+		    <p>Your Facebook username appears after the www.facebook.com/ in your browser URL. Usually it looks something like this: www.facebook.com/*yourUserName*. In other words, if you are Rick James, your Facebook URL looks something like: www.facebook.com/RickJames. Sometimes you have to look at your timeline to get your account name in the URL. </p>
+		    <p><img src="images/docImages/fbAccountName.png" style='width:500px'/></p>
+		    <p>Once you have your account name *yourUserName* you add it to your plugin options when instantiating a jQueryFacebookWall like so:</p>
+		    <p>In this example the Facebook Account Name is RickJames</p>
+            <pre>
+            	<code>
+$('.example-class-name').jQueryFacebookWall({
+    appId: 'yourAppId',
+    FacebookUser: 'RickJames',
+    domain: 'yourDomain.com',
+});
+                </code>
+            </pre>
+            
+            <h4 id='fb-app'>Create / Get your Facebook Account App Id/Key and Secret</h4>
+            <ol>
+            	<li>Log into your Facebook Account.</li>
+                <li>Go to <a href="https://developers.Facebook.com/apps">https://developers.Facebook.com/apps</a>
+                	<ol>
+                    	<li>If you have not registered with Facebook as a developer, do so.</li>
+                        <li>Follows these steps<br />
+                        	<img src="images/docImages/app1.png" style='width:750px'/>
+                        	<img src="images/docImages/app2.png" style='width:750px'/>
+                        	<img src="images/docImages/app3.png" style='width:750px'/>
+                        	<img src="images/docImages/app4.png" style='width:750px'/>
+                        	<img src="images/docImages/app5.png" style='width:750px'/>
+                        	<img src="images/docImages/app6.png" style='width:750px'/>
+                        	<img src="images/docImages/app7.png" style='width:750px'/>
+                        	<img src="images/docImages/app8.png" style='width:750px'/>
+                      </li>
+                    </ol>
+                </li>
+                <li>Make note of your App Id/API key and App Secret they will be used to generate you Facebook Access Token.</li>
+                <li>Use your App Id/API key for 'yourAppId' in the plugin call.</li>
+            </ol>
+            <pre>
+            	<code>
+$('.example-class-name').jQueryFacebookWall({
+    appId: '25651869782451',
+    FacebookUser: 'RickJames',
+    domain: 'yourDomain.com',
+});                
+                </code>
+            </pre>
+            
+            
+<h4 id='fb-publish-actions'>Get publish_actions permissions for your Facebook App</h4>
+<p>
+	Around the beginning of 2015 Facebook removed publish_actions from the default permissions granted to newly created Apps.
+    Because jQuery Facebook Wall uses an app to publish likes and comments to posts and pictures, you need to requests publish_actions
+    permissions be granted on your app. Here is how you do it:
+</p>
+<p>
+<img src="images/docImages/app9.png" style='width:750px'/><br />
+<img src="images/docImages/app10.png" style='width:750px'/><br />
+<img src="images/docImages/app11.png" style='width:750px'/><br />
+<ol>
+    	<li>Go to the App Details tab.</li>
+        <li>Use the jQueryFacebookWall/images/facebooAppPermissions/1024x1024_fbappicon_flat.png for the app icon.</li>
+        <li>Copy the "Long Description" from the appStatusReview.txt.</li>
+        <li>Facebook requires you have a privacy policy page on your site before you can apply for the publish_actions permissions. 
+        If you don't already have one, this link is to an open source privacy policy.
+		<a href="http://opensource-template.wikidot.com/legal:privacy-policy">Privacy Policy Template</a>
+        </li>
+        <li>Go to the App Status &amp; Review tab.</li>
+  <li>Click the "items in review" link.</li>
+        <li>Click the "Add Notes" Button, use the answers to the notes questions provided in the appStatusReview.txt file that came with the plugin.</li>
+        <li>Fill in the "Facebook Login Integration" field with the answer provided appStatusReview.txt.</li>
+        <li>Note no test user is required so leave that field blank.</li>
+        <li>Add the screen shots 01_preview1.jpg ... 04_preview.png located in the images/facebookAppPermissions folder that came with the plugin.</li>
+        <li>Click the "I have tested that all platforms load and use Facebook Login" checkbox.</li>
+        <li>Click the Submit for Review. Facebook usually responds to the request in a couple business days. If you get rejected make note of the reason
+        for the rejection. Update your answers accordingly and resubmit. The Answers provided have been used to get permissions successfully granted, however
+        the facebook reviewers change so it is not a 100% guarantee. Please let me know if you get rejected and why you received the rejection.
+        </li>
+</ol>
+</p>
+
+<h4 id='fb-access-token'>Get your Facebook Access Token</h4>
+            <p>jQueryFacebookWall provides a php script that will retrieve an access token for your convenience. To use it:</p>
+            <ol>
+            	<li>Open fb_get_app_token.php and enter your Facebook App Id and Secret on lines 19&20.
+                  <pre>
+                	<code>
+19	$app_id = '----------------';
+20  $app_secret = '----------------';
+                    </code>
+                </pre>
+                </li>
+                <li>Save and exit the file.</li>
+                <li>Generate a Facebook access token for your Facebook App by running  fb_get_app_token.php in your browser. If you have unzipped the plugin and put it in, say, yourDomainWebRoot/jQueryFacebooWall/, then in your browser open www.yourdomain.com/fb_get_app_token.php </li>
+            	<li>fb_get_app_token.php will retrieve an access token from Facebook and write it to the fb_app_token.html file. Make sure that fb_app_token.html has full write permissions.</li>
+            	<li>Open fb_app_token.html - it should contain something that looks like this: {"appToken":"2450 blahblahblahblahblah|fkLcyxj6C-_blahblahblahblahblah"}</li>
+            	<li>If it doesn't, you didn’t get an access token from Facebook. An alternative method of retrieving an App access token is running www.yourdomain.com/fb_get_app_token.php?debug=true This will show debugging information for the script. If it returns an access token, copy and paste it into fb_app_token.html</li>
+            </ol>
+<p>
+            	<img src="images/docImages/fbAccessToken.png" style="width:750px" /> 
+            </p>
+            <p>* To generate an App access token via the fb_get_app_token.php script, php must have https wrapper enabled. In your php.ini ;extension=php_openssl.dll must be uncommented. If you can’t do this you may have to contact your hosting provider or system administrator.</p>
+            <h4>Get your Facebook Access Token - Without php</h4>
+            <p>If your host doesn't support php, you don't have php's https wrappers enabled, or you just like doing things by hand, you can retrieve a Facebook access token by the following means:</p>
+            <ol>
+            	<li>In the URL below, replace $app_secret and $app_secret with the App Id/API  and App Secret you retrieved from Facebook in the previous step   </li>
+                <li>https://graph.facebook.com/oauth/access_token?client_id=$app_id&client_secret=$app_secret&grant_type=client_credentials</li>
+                <li>Copy and past the URL in your browser and Facebook will return an App access token to you. It will be something like:  access_token=256518697824517|nLKpMxbgiABaYfjhSSHf1GJj</li>
+            	<li>
+                Open the fb_app_token.html The contents look like this:<br />
+                {"appToken":"If you see this you haven't generated your App token yet"} <br /> 
+                Replace the "If you see this you haven't generated your App token yet" with the access_token you retrieved from Facebook. Make sure to leave the quotes.
+                <br />
+                It should looks like this when your done:
+                <br /> {"appToken":"256518697824517|nLKpMxbgiABaYfjhSSHf1GJj"}
+                </li>
+                <li>Save and close fb_app_token.html</li>
+            </ol>
+		    
+<h4 id="fb-pages">Facebook Pages vs Facebook User Accounts</h4>
+            <p>
+            jQueryFacebookWall plugin makes use of Facebook’s open graph API, which has various levels of authentication requirements. Facebook pages have looser restrictions than user accounts; therefore, the plugin can retrieve more info (posts and album data) for pages than normal accounts. jQueryFacebookWall will work with normal accounts, but you will not be able to retrieve album data and you will have to edit the permissions of your posts and photos in your Facebook account. If you don’t have a Facebook page, you should consider creating one. You can do so by logging into Facebook and going here: https://www.Facebook.com/pages/create/
+            </p>
+<p>Here are the caveats imposed by Facebook’s authentication requirements:</p>
+            <ul>
+            	<li>Pages can have albums.</li>
+                <li>Pages can show all posts.</li>
+                <li>User accounts can’t have albums.</li>
+                <li>User accounts don’t include all posts.</li>
+            </ul>
+<hr />            
+<h3 id="#IIS"><strong>Using the plugin on Windows IIS</strong> - <a href="#toc">top</a></h3>
+
+<p>
+Yes can use the plugin with ASP and IIS! It takes few extra set up steps. You'll need to add .ejs mime types to IIS.
+</p>
+<p>
+IIS does not like the file extension of the ejs javascript templateing engine used by the plugin (.ejs). You need to add a MIME extension for .ejs with type :text/html in your IIS administration panel. If you do that everything should work . Here is an blog I found on the subject
+</p>
+<p>
+The problem: <a href="http://forums.asp.net/t/1442319.aspx/1">http://forums.asp.net/t/1442319.aspx/1</a>
+</p>
+<p>
+How to add a mime type in IIS: <a href="http://technet.microsoft.com/en-us/library/cc725608(v=ws.10).aspx">http://technet.microsoft.com/en-us/library/cc725608(v=ws.10).aspx</a>            
+</p>
+<hr>
+		    
+		    <p>Once again, thank you so much for purchasing this plugin. As I said at the beginning, I'd be glad to help you if you have any questions relating to this plugin. You can ask me question <a href="http://ironlasso.com/contact-2/">at my site</a>. No guarantees, but I'll do my best to assist. If you have a more general question relating to the plugins on CodeCanyon, you might consider visiting the forums and asking your question in the "Item Discussion" section.</p> 
+		    
+		    <p class="append-bottom alt large"><strong>Lorenzo Gangi</strong></p>
+		    <p><a href="#toc">Go To Table of Contents</a></p>
+		    
+		    
+		    <hr class="space">
+		    </div><!-- end d                    

@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery Facebook Wall</title>
+
+	<!--style sheets-->
+    <!--UNMINIFIED VERSION -->
+	<link rel="stylesheet" href="css/jQueryFacebookWall.css" type="text/css" media="screen" />
+    <!---MINIFIED VERSION 
+    Remove the scritp above and uncomment this if you want to use the minified version
+	<link rel="stylesheet" href="css/jQueryFacebookWall.min.css" type="text/css" media="screen" />
+    --->
+	<link rel="stylesheet" href="../includes/jqfm-example.css" type="text/css" media="screen" />
+</head>
+
+<body style="background:#fcfcfc url(http://ironlasso.com/wp-content/uploads/2013/05/background.jpg) repeat top center fixed;">
+	<?php include('../includes/jqfm-nav.html'); ?>
+    <div style="width:40%; margin: 0 auto;">
+   		<div class="facebook-wall"></div>
+   		<div class="facebook-wall-2"></div>
+	</div>
+    <div class=" fb_reset" id="fb-root"></div>
+    <?php include('../includes/jqfm-footer.html'); ?>
+</body>
+	
+	<!--load jQuery from google, else get a local copy-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="library/js/libs/jquery-1.7.min.js"><\/script>')</script>
+  
+   	<!--UNMINIFIED VERSION -->
+    <!--load the language translation file -->
+    <script type="text/javascript" src="js/languages.js"></script> 
+	<!--load the ejs templateing engine-->
+	 <script type="text/javascript" src="js/ejs.js"></script>        
+	<!--load the facebook wall plugin-->
+	 <script src="js/jQueryFacebookWall.js"></script>
+             
+    <!---MINIFIED VERSION 
+    Remove the three scritps above and uncomment this if you want to use the minified version
+	<script src="js/jQueryFacebookWall.min.js"></script>  
+    --->
+    
+    <script>
+	$(document).ready(function(){
+		// Calling our plugin with a fb account username and an access token, from 
+		var wall1 = $('.facebook-wall').jQueryFacebookWall({
+			'appId': '245065858862722',
+			'facebookUser':'natgeo',
+			'domain': 'ironlasso.com',
+			'installDirectory': '/jQueryFacebookWall/', //where the plugin lives relative to your web root
+			'display':'single-column',
+			'posts':{
+				show: true,
+				limit: 5,
+				order: 5	
+			},
+			'comments':{
+				showAtStart:3,
+				showMoreNum:10,
+				limit: 50
+			},
+			likes:{
+				order: 4,
+				useCoverPhotos: true
+			},
+			albums:{
+				order: 3,
+				limit: 6
+			},
+			photos:{
+				order: 2
+			},
+			events:{
+				show: false,
+				order: 1,
+				limit: 4
+			},
+			'debug': false
+		});
+		
+		
+		var wall2 = $('.facebook-wall-2').jQueryFacebookWall({
+			'appId': '245065858862722',
+			'facebookUser':'ufc',
+			'domain': 'ironlasso.com',
+			'installDirectory': '/jQueryFacebookWall/', //where the plugin lives relative to your web root
+			'display':'single-column',
+			'posts':{
+				show: true,
+				limit: 5,
+				order: 5	
+			},
+			'comments':{
+				showAtStart:3,
+				showMoreNum:10,
+				limit: 50
+			},
+			likes:{
+				show: true,
+				order: 4,
+				useCoverPhotos: true,
+			},
+			albums:{
+				show: true,
+				order: 3,
+				limit:12, 
+				filterAlbums: ['Cover Photos','UFC Fight Night: Cerrone vs Miller weigh-in']
+			},
+			photos:{
+				show: false,
+				order: 2
+			},
+			events:{
+				show: false,
+				order: 1,
+				limit: 4
+			},
+			'debug': false
+		});
+		
+		
+		
+	})//end document ready
+	</script>
+
+</html>

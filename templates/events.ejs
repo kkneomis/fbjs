@@ -1,0 +1,59 @@
+<div class="events story drop-shadow facebook-wall-clearfix">
+	<div class="events-content story-content" role="article">
+		<div class="events-header story-headline">
+			<span class="events-header-text"><a href='https://www.facebook.com/<%=this.facebookUser%>/events'><%=localize('Events')%></a></span>			
+		</div>
+		<% 
+		var place = '',
+		    name = '',
+		    location = '',
+			city = ''
+			state = '',
+			street = '',
+			zip = '',
+			country = '',
+		    endTime = ''
+			description = '';
+		
+		for(var i=0; i<this.data.length; i++){ 
+		
+		    place = '',
+			
+			endTime = ( this.data[i].end_time && (this.data[i].start_time !== this.data[i].end_time)) ? " - "+this.data[i].end_time : "";
+			description = ( this.data[i].description )? this.data[i].description : "";
+			
+			if(this.data[i].place){
+			    
+		    	name = ( this.data[i].name )?  this.data[i].name+"<br />": "";
+		    	
+				if( this.data[i].place.location ){
+				    location = this.data[i].place.location;
+					city = ( location.city )      ? location.city+" "         : "";
+					country = ( location.country )? location.country          : "";
+					street = ( location.street )  ? location.street+"<br />"  : "";
+					state = ( location.state )    ? location.state+" "        : "";
+					zip = ( location.zip )        ? location.zip+"<br />"     : "";
+				}
+				
+				place = name+street+city+state+zip+country;
+			}
+		
+		%>		
+			
+			<div class='event facebook-wall-clearfix'>
+				<img class='event-image left' src='<%=this.data[i].picture.data.url%>'  />
+				<div class='event-details facebook-wall-clearfix'>
+					<div class='event-title h3'><a href='https://www.facebook.com/events/<%=this.data[i].id%>'><%=this.data[i].name %> fb page</a></div>
+					<% if(this.showTicketLink && this.data[i].ticket_uri) { %>
+						<div class='event-title'><a href='<%=this.data[i].ticket_uri%>'><%=localize('Event Tickets')%></a></div>
+					<% } %>
+					<div class='event-time'><%=this.data[i].start_time%><%=endTime%></div>
+					<div class='event-location'><%=place%></div>
+					<% if ( description ) {%>
+						<div class='event-description'><%=description%></div>
+					<% } %>
+				</div>
+			</div>
+		<% } %>
+	</div>
+</div>

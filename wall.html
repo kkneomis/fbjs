@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<title>jQuery Facebook Wall</title>
+
+	<!--style sheets-->
+    <!--UNMINIFIED VERSION -->
+	<link rel="stylesheet" href="css/jQueryFacebookWall.css" type="text/css" media="screen" />
+    <!---MINIFIED VERSION 
+    Remove the scritp above and uncomment this if you want to use the minified version
+	<link rel="stylesheet" href="css/jQueryFacebookWall.min.css" type="text/css" media="screen" />
+    --->
+    <link rel="stylesheet" href="../includes/jqfm-example.css" type="text/css" media="screen" />
+
+</head>
+
+<body style="background:#fcfcfc url(http://ironlasso.com/wp-content/uploads/2013/05/background.jpg) repeat top center fixed;">
+	<?php include('../includes/jqfm-nav.html'); ?>
+    <div class="example-wrapper">
+   		<div class="facebook-wall"></div>
+	</div>
+    <?php include('../includes/jqfm-footer.html'); ?>
+</body>
+	
+	<!--load jQuery from google, else get a local copy-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="library/js/libs/jquery-1.7.min.js"><\/script>')</script>
+    
+	<!--UNMINIFIED VERSION -->
+    <!--load the language translation file -->
+    <script type="text/javascript" src="js/languages.js"></script> 
+	<!--load the ejs templateing engine-->
+	 <script type="text/javascript" src="js/ejs.js"></script>        
+	<!--load the facebook wall plugin-->
+	 <script src="js/jQueryFacebookWall.js"></script>
+             
+    <!---MINIFIED VERSION 
+    Remove the three scritps above and uncomment this if you want to use the minified version
+	<script src="js/jQueryFacebookWall.min.js"></script>  
+    --->
+    
+    <script>
+	$(document).ready(function(){
+		// Calling our plugin with a fb account username and an access token, from 
+		$('.facebook-wall').jQueryFacebookWall({
+			'appId': '245065858862722',
+			'facebookUser':'InternationalSurfingAssociation',
+			'domain': 'ironlasso.com',
+			'installDirectory': '/jQueryFacebookWall/', //where the plugin lives relative to your web root
+			'display':'wall',
+			'posts':{
+				'feedType': 'feed',
+				'limit': 12	
+			},
+			'comments':{
+				'showAtStart': 3,
+				'showMoreNum': 10,
+				'limit': 50
+			},
+			'likes':{
+				'minLikes': 0 
+			},
+			'albums':{
+				'limit': 6
+			},
+			'events':{
+				'show':false
+			},
+			'debug': false
+		});
+	})//end document ready
+	</script>
+
+</html>

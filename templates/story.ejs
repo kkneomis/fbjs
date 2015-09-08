@@ -1,0 +1,130 @@
+<div class='story drop-shadow facebook-wall-clearfix' data-id="<%=this.id%>" data-story-link="http://facebook.com/<%=this.postLink%>">
+	<div class='timeline-pointer-left'></div>
+	<a class='story-user-image-link' href='http://facebook.com/<%=this.from.id%>/'>
+		<img class='user-image' src='http://graph.facebook.com/<%=this.from.id%>/picture' />
+	</a>
+	<div class='story-content' role='article'>
+		<div class='story-headline'>
+			<span class='h3'><a href='http://facebook.com/<%=this.from.id%>/'><%=this.from.name%></a></span>
+			<span class='created-time'><%=this.created_time%></span>
+			<span><%=this.story%></span>
+		</div>
+		<div class='story-message'><%=this.message%></div>
+		<div class='story-attachments'>
+			<a href='<% if(this.link){ %><%=this.link%><% } %>' target='_blank'>
+				<% 
+				//if the story has a name split the attachment
+				if(this.name){
+				%>
+					<div class='story-link-wrapper facebook-wall-clearfix'>
+						<div class='story-link-wrapper-left <% if(this.full_picture){%>has-image<%}%>'>
+							<div class='hide'>
+							<% if(this.source){ %>
+								<% if(this.properties){ %>properties
+								<% for (var i =0; i<this.properties.length; i++){%>
+									<%=this.properties[i]%><br />
+								<%}%>
+								<% } %>
+							<% } %>
+							</div>
+							<% if(this.full_picture){
+														
+							//use the default story image	
+							if(this.object_id){
+								var picture = 'https://graph.facebook.com/'+this.object_id+'/picture/';
+							}
+							else{
+								//get the normal size picture, by replaceing the s.extension at the end of the url because facebook doesnt return a source field for feeds currently
+								picture = this.full_picture.replace('s.jpg','n.jpg');
+							}
+							
+							%>
+							<img class='story-picture' src='<%=picture%>' />
+								
+							<% } %>
+						</div>
+						<div class='story-link-wrapper-right <% if(this.full_picture){%>has-image<%}%>'>					
+							<% if(this.name){ %><div class='h3'><%=this.name%></div><% } %>
+							<% if(this.caption){ %><div><%=this.caption%></div><% } %>
+							<% if(this.description){ %><div><%=this.description%></div><% } %>
+						</div>
+					</div>
+				<%}else{
+				//else just show the image
+				var picture = false;
+				%>
+					<% 
+					//try and get the default story image
+					if(this.object_id){
+						var picture = 'https://graph.facebook.com/'+this.object_id+'/picture/';
+					}					
+					//get the normal size picture, by replaceing the s.extension at the end of the url because facebook doesnt return a source field for feeds currently
+					else if(this.full_picture){
+					    picture = this.full_picture.replace('s.jpg','n.jpg')
+						picture = picture.replace('s.png','n.png');
+						//hack to get big pics from facebook.
+						picture = picture.replace('130x130','600x600');
+					}
+					if(picture){
+					%>
+						<img class='story-picture' src='<%=picture%>' />				
+				<%
+					} 
+				}//end else 
+				%>
+			</a>
+		</div>
+		<div class='story-interactions facebook-wall-clearfix'>
+			<div class='story-user-interactions left'>
+				<a class='user-interaction-like'><%=localize('Like')%></a> · 
+				<a class='user-interaction-comment'><%=localize('Comment')%></a> 
+			</div>
+			<div class='story-shares right'>
+				<a title='shares'>
+				<% if(this.shares){ %>
+					<span class='fbw-icon share'></span><span class='shares-count'><%=this.shares.count%></span>
+				<% } %>
+				</a>
+			</div>
+		</div>
+		
+		
+		<div class='story-stats <% if(!this.likes){ %>hide<% } %>'>
+			<a>
+				<span class='fbw-icon like-big'></span>
+				<span class='you-like'><%=localize('You and')%></span>
+				<span class='story-comment-count'>
+					<% if(this.likes){ %><%=this.likes.summary.total_count%><% } %>
+				</span>
+			</a> <%=localize('like this')%>.
+		</div>
+		
+		
+		
+		<div class='story-comments'>
+			<div class='comments'>
+			 <% //comments get inserted here %>
+			</div>
+			
+			<div class='comment-wrapper comment-stats facebook-wall-clearfix <% if (!this.comments){%>hide<% } %>'>
+				<div class='comments-view-more' >
+					<a>
+					<span class='left'>
+						<span class='fbw-icon word-box'></span> <%=localize('View more comments')%>
+					</span> 
+					</a>
+					<span class='comments-count right'>
+						<span class='comment-count-current'><% if (this.comments){%><%=this.comments.visible%><% } %></span> <%=localize('of')%> 
+						<span>
+							<% if (this.comments){%><%=this.comments.count%><% } %>
+						</span>
+					</span>
+				</div>
+			</div>	
+			<div class='comment-wrapper-write facebook-wall-clearfix'>
+				<input class='comment-write' type="text" placeholder='<%=localize('Write a Facebook comment')%>...'  />
+			</div>	
+		</div>
+		
+	</div>
+</div>
